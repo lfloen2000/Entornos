@@ -1,0 +1,187 @@
+SET SESSION FOREIGN_KEY_CHECKS=0;
+
+/* Drop Tables */
+
+DROP TABLE IF EXISTS Cursan;
+DROP TABLE IF EXISTS Hacen;
+DROP TABLE IF EXISTS Realizan;
+DROP TABLE IF EXISTS Alumnos;
+DROP TABLE IF EXISTS Imparte;
+DROP TABLE IF EXISTS Asignaturas;
+DROP TABLE IF EXISTS Elabora;
+DROP TABLE IF EXISTS Examenes;
+DROP TABLE IF EXISTS Practicas;
+DROP TABLE IF EXISTS Profesores;
+
+
+
+
+/* Create Tables */
+
+CREATE TABLE Alumnos
+(
+	Num_Alu  NOT NULL,
+	Nombre ,
+	Grupo ,
+	PRIMARY KEY (Num_Alu)
+);
+
+
+CREATE TABLE Asignaturas
+(
+	Num_Asig  NOT NULL,
+	Nombre ,
+	PRIMARY KEY (Num_Asig)
+);
+
+
+CREATE TABLE Cursan
+(
+	Num_Alu  NOT NULL,
+	Num_Asig  NOT NULL,
+	Trimestre 
+);
+
+
+CREATE TABLE Elabora
+(
+	Num_Prof  NOT NULL,
+	Cod_Prac  NOT NULL,
+	Elabora 
+);
+
+
+CREATE TABLE Examenes
+(
+	NExamen  NOT NULL,
+	NPreguntas ,
+	Fecha ,
+	PRIMARY KEY (NExamen)
+);
+
+
+CREATE TABLE Hacen
+(
+	Num_Alu  NOT NULL,
+	NExamen  NOT NULL,
+	Nota 
+);
+
+
+CREATE TABLE Imparte
+(
+	Num_Prof  NOT NULL,
+	Num_Asig  NOT NULL
+);
+
+
+CREATE TABLE Practicas
+(
+	Cod_Prac  NOT NULL,
+	Titulo ,
+	Nivel ,
+	PRIMARY KEY (Cod_Prac)
+);
+
+
+CREATE TABLE Profesores
+(
+	Num_Prof  NOT NULL,
+	Nombre ,
+	PRIMARY KEY (Num_Prof)
+);
+
+
+CREATE TABLE Realizan
+(
+	Num_Alu  NOT NULL,
+	Cod_Prac  NOT NULL,
+	Nota ,
+	Fecha 
+);
+
+
+
+/* Create Foreign Keys */
+
+ALTER TABLE Cursan
+	ADD FOREIGN KEY (Num_Alu)
+	REFERENCES Alumnos (Num_Alu)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Hacen
+	ADD FOREIGN KEY (Num_Alu)
+	REFERENCES Alumnos (Num_Alu)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Realizan
+	ADD FOREIGN KEY (Num_Alu)
+	REFERENCES Alumnos (Num_Alu)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Cursan
+	ADD FOREIGN KEY (Num_Asig)
+	REFERENCES Asignaturas (Num_Asig)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Imparte
+	ADD FOREIGN KEY (Num_Asig)
+	REFERENCES Asignaturas (Num_Asig)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Hacen
+	ADD FOREIGN KEY (NExamen)
+	REFERENCES Examenes (NExamen)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Elabora
+	ADD FOREIGN KEY (Cod_Prac)
+	REFERENCES Practicas (Cod_Prac)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Realizan
+	ADD FOREIGN KEY (Cod_Prac)
+	REFERENCES Practicas (Cod_Prac)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Elabora
+	ADD FOREIGN KEY (Num_Prof)
+	REFERENCES Profesores (Num_Prof)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE Imparte
+	ADD FOREIGN KEY (Num_Prof)
+	REFERENCES Profesores (Num_Prof)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+
